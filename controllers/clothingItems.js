@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const ClothingItem = require("../models/clothingItems");
 const { DEFAULT_ERROR, INVALID_REQUEST } = require("../utils/errors");
 const createItem = (req, res) => {
@@ -12,8 +13,7 @@ const createItem = (req, res) => {
   ClothingItem.create({ name, weather, imageUrl, owner: req.user._id })
     .then((item) => {
       console.log(item);
-      // res.send({ data: item });
-      res.status(200).send({ name: item.name });
+      res.status(201).json({ data: item });
     })
     .catch((e) => {
       console.error(e);
