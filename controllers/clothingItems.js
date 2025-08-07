@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const ClothingItem = require("../models/clothingItems");
-const { DEFAULT_ERROR, INVALID_REQUEST } = require("../utils/errors");
+
+const {
+  DEFAULT_ERROR,
+  INVALID_REQUEST,
+  NOT_FOUND,
+} = require("../utils/errors");
+
 const createItem = (req, res) => {
   console.log(req.user);
   console.log(req.body);
@@ -51,15 +57,81 @@ const updateItem = (req, res) => {
     });
 };
 
+const likeItem = (req, res) => {
+  const { itemId } = req.params;
+  const userId = req.user._id;
+
+  ClothingItem.findByIdAndUpdate(
+    itemId,
+    { $addToSet: { likes: userId } },
+    { new: true }
+  )
+    .orFail()
+    .then((item) => res.status(200).send({ data: item }))
+    .catch((e) => {
+      console.error(e);
+      if (e.name === "DocumentNotFoundError") {
+        return res.status(NOT_FOUND).send({ message: "Item not found" });
+      }
+      if (e.name === "CastError") {
+        return res.status(INVALID_REQUEST).send({ message: "Invalid item ID" });
+      }
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "Error from likeItem", e });
+    });
+};
+
+const unlikeItem = (req, res) => {
+  const { itemId } = req.params;
+  const userId = req.user._id;
+
+  ClothingItem.findByIdAndUpdate(
+    itemId,
+    { $pull: { likes: userId } },
+    { new: true }
+  )
+    .orFail()
+    .then((item) => res.status(200).send({ data: item }))
+    .catch((e) => {
+      console.error(e);
+      if (e.name === "DocumentNotFoundError") {
+        return res.status(NOT_FOUND).send({ message: "Item not found" });
+      }
+      if (e.name === "CastError") {
+        return res.status(INVALID_REQUEST).send({ message: "Invalid item ID" });
+      }
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "Error from unlikeItem", e });
+    });
+};
+
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
   console.log(itemId);
   ClothingItem.findByIdAndDelete(itemId)
     .orFail()
-    .then((item) => res.status(204).send({}))
+    .then((item) => res.status(200).send({ data: item }))
     .catch((e) => {
       console.error(e);
-      res.status(DEFAULT_ERROR).send({ message: "Error from deleteItem", e });
+      if (e.name === "DocumentNotFoundError") {
+        return res.status(NOT_FOUND).send({ message: "Item not found" });
+      }
+      if (e.name === "CastError") {
+        return res.status(INVALID_REQUEST).send({ message: "Invalid item ID" });
+      }
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "Error from deleteItem", e });
     });
 };
-module.exports = { createItem, getItems, updateItem, deleteItem };
+
+module.exports = {
+  createItem,
+  getItems,
+  updateItem,
+  deleteItem,
+  unlikeItem,
+  likeItem,
+};
