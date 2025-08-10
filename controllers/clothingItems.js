@@ -15,7 +15,7 @@ const createItem = (req, res) => {
     return res.status(401).send({ message: "Unauthorized: no user info" });
   }
 
-  ClothingItem.create({ name, weather, imageUrl, owner: req.user._id })
+  return ClothingItem.create({ name, weather, imageUrl, owner: req.user._id })
     .then((item) => {
       console.log(item);
       // res.status(201).json({ data: item });
@@ -35,7 +35,7 @@ const createItem = (req, res) => {
 };
 
 const getItems = (req, res) => {
-  ClothingItem.find({})
+  return ClothingItem.find({})
     .then((items) => res.status(200).send(items))
     .catch((e) => {
       console.error(e);
@@ -49,7 +49,7 @@ const updateItem = (req, res) => {
   const { itemId } = req.params;
   const { imageUrl } = req.body;
 
-  ClothingItem.findByIdAndUpdate(itemId, { $set: { imageUrl } })
+  return ClothingItem.findByIdAndUpdate(itemId, { $set: { imageUrl } })
     .orFail()
     .then((item) => res.status(200).send({ data: item }))
     .catch((e) => {
@@ -64,7 +64,7 @@ const likeItem = (req, res) => {
   const { itemId } = req.params;
   const userId = req.user._id;
 
-  ClothingItem.findByIdAndUpdate(
+  return ClothingItem.findByIdAndUpdate(
     itemId,
     { $addToSet: { likes: userId } },
     { new: true }
@@ -89,7 +89,7 @@ const unlikeItem = (req, res) => {
   const { itemId } = req.params;
   const userId = req.user._id;
 
-  ClothingItem.findByIdAndUpdate(
+  return ClothingItem.findByIdAndUpdate(
     itemId,
     { $pull: { likes: userId } },
     { new: true }
@@ -113,7 +113,7 @@ const unlikeItem = (req, res) => {
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
   console.log(itemId);
-  ClothingItem.findByIdAndDelete(itemId)
+  return ClothingItem.findByIdAndDelete(itemId)
     .orFail()
     .then((item) => res.status(200).send({ data: item }))
     .catch((e) => {
