@@ -54,7 +54,9 @@ const updateItem = (req, res) => {
     .then((item) => res.status(200).send({ data: item }))
     .catch((e) => {
       console.error(e);
-      res.status(DEFAULT_ERROR).send({ message: "Error from userItems", e });
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "Error from userItems", e });
     });
 };
 
