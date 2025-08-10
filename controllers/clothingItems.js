@@ -16,11 +16,7 @@ const createItem = (req, res) => {
   }
 
   return ClothingItem.create({ name, weather, imageUrl, owner: req.user._id })
-    .then((item) => {
-      console.log(item);
-      // res.status(201).json({ data: item });
-      return res.status(201).send({ data: item });
-    })
+    .then((item) => res.status(201).send({ data: item }))
     .catch((e) => {
       console.error(e);
       if (e.name === "ValidationError") {
