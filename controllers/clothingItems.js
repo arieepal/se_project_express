@@ -19,7 +19,8 @@ const createItem = (req, res) => {
   ClothingItem.create({ name, weather, imageUrl, owner: req.user._id })
     .then((item) => {
       console.log(item);
-      res.status(201).json({ data: item });
+      // res.status(201).json({ data: item });
+      res.status(201).send({ data: item });
     })
     .catch((e) => {
       console.error(e);
