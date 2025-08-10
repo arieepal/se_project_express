@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const ClothingItem = require("../models/clothingItems");
 
 const {
@@ -20,19 +19,18 @@ const createItem = (req, res) => {
     .then((item) => {
       console.log(item);
       // res.status(201).json({ data: item });
-      res.status(201).send({ data: item });
+      return res.status(201).send({ data: item });
     })
     .catch((e) => {
       console.error(e);
-      if (e.name == "ValidationError") {
+      if (e.name === "ValidationError") {
         return res
           .status(INVALID_REQUEST)
           .send({ message: "Invalid input data", e });
-      } else {
-        res
-          .status(DEFAULT_ERROR)
-          .send({ message: " Error from createItem", e });
       }
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: " Error from createItem", e });
     });
 };
 
@@ -41,7 +39,9 @@ const getItems = (req, res) => {
     .then((items) => res.status(200).send(items))
     .catch((e) => {
       console.error(e);
-      res.status(DEFAULT_ERROR).send({ message: "Error from getItems", e });
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "Error from getItems", e });
     });
 };
 

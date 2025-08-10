@@ -8,19 +8,19 @@ const {
   unlikeItem,
   likeItem,
 } = require("../controllers/clothingItems");
-//crud
+// crud
 
 // creat
 router.post("/", createItem);
 
-//read
+// read
 router.get("/", getItems);
 
-//update
+// update
 router.put("/:itemId", updateItem);
 router.put("/:itemId/likes", likeItem);
 
-//delete
+// delete
 router.delete("/:itemId", deleteItem);
 router.delete("/:itemId/likes", unlikeItem);
 

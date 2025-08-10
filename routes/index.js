@@ -6,8 +6,8 @@ const userRouter = require("./users");
 router.use("/items", clothingItem);
 router.use("/users", userRouter);
 
-router.use((req, res, next) => {
-  return res.status(DEFAULT_ERROR).send({ message: "route not found" });
-});
+router.use((req, res) =>
+  res.status(DEFAULT_ERROR).send({ message: "route not found" })
+);
 
 module.exports = router;
