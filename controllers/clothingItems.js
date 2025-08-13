@@ -30,8 +30,8 @@ const createItem = (req, res) => {
     });
 };
 
-const getItems = (req, res) => {
-  return ClothingItem.find({})
+const getItems = (req, res) =>
+  ClothingItem.find({})
     .then((items) => res.status(200).send(items))
     .catch((e) => {
       console.error(e);
@@ -39,7 +39,6 @@ const getItems = (req, res) => {
         .status(DEFAULT_ERROR)
         .send({ message: "Error from getItems", e });
     });
-};
 
 const updateItem = (req, res) => {
   const { itemId } = req.params;
