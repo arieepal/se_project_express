@@ -22,11 +22,11 @@ const createItem = (req, res) => {
       if (e.name === "ValidationError") {
         return res
           .status(INVALID_REQUEST)
-          .send({ message: "Invalid input data", e });
+          .send({ message: "Invalid input data" });
       }
       return res
         .status(DEFAULT_ERROR)
-        .send({ message: " Error from createItem", e });
+        .send({ message: " Error from createItem" });
     });
 };
 
@@ -35,9 +35,7 @@ const getItems = (req, res) =>
     .then((items) => res.status(200).send(items))
     .catch((e) => {
       console.error(e);
-      return res
-        .status(DEFAULT_ERROR)
-        .send({ message: "Error from getItems", e });
+      return res.status(DEFAULT_ERROR).send({ message: "Error from getItems" });
     });
 
 const updateItem = (req, res) => {
@@ -51,7 +49,7 @@ const updateItem = (req, res) => {
       console.error(e);
       return res
         .status(DEFAULT_ERROR)
-        .send({ message: "Error from userItems", e });
+        .send({ message: "Error from userItems" });
     });
 };
 
@@ -74,9 +72,7 @@ const likeItem = (req, res) => {
       if (e.name === "CastError") {
         return res.status(INVALID_REQUEST).send({ message: "Invalid item ID" });
       }
-      return res
-        .status(DEFAULT_ERROR)
-        .send({ message: "Error from likeItem", e });
+      return res.status(DEFAULT_ERROR).send({ message: "Error from likeItem" });
     });
 };
 
@@ -101,7 +97,7 @@ const unlikeItem = (req, res) => {
       }
       return res
         .status(DEFAULT_ERROR)
-        .send({ message: "Error from unlikeItem", e });
+        .send({ message: "Error from unlikeItem" });
     });
 };
 
@@ -121,7 +117,7 @@ const deleteItem = (req, res) => {
       }
       return res
         .status(DEFAULT_ERROR)
-        .send({ message: "Error from deleteItem", e });
+        .send({ message: "Error from deleteItem" });
     });
 };
 

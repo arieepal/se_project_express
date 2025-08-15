@@ -14,13 +14,10 @@ mongoose
   .catch(console.error);
 
 app.use(express.json());
-// const routes = require("./routes");
-// app.use(routes);
 
 app.use((req, res, next) => {
   req.user = {
-    _id: "687ec322bf6b2869d4b54c56", // paste the _id of the test user created in the previous step
-  };
+    _id: "687ec322bf6b2869d4b54c56" };
   next();
 });
 
