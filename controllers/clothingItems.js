@@ -4,6 +4,7 @@ const {
   DEFAULT_ERROR,
   INVALID_REQUEST,
   NOT_FOUND,
+  UNAUTHORIZED,
 } = require("../utils/errors");
 
 const createItem = (req, res) => {
@@ -12,7 +13,9 @@ const createItem = (req, res) => {
   const { name, weather, imageUrl } = req.body;
   if (!req.user || !req.user._id) {
     console.error("req.user is undefined");
-    return res.status(401).send({ message: "Unauthorized: no user info" });
+    return res
+      .status(UNAUTHORIZED)
+      .send({ message: "Unauthorized: no user info" });
   }
 
   return ClothingItem.create({ name, weather, imageUrl, owner: req.user._id })

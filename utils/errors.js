@@ -1,5 +1,6 @@
 module.exports = {
   INVALID_REQUEST: 400,
+  UNAUTHORIZED: 401,
   NOT_FOUND: 404,
   DEFAULT_ERROR: 500,
 };
