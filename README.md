@@ -1,6 +1,6 @@
 # WTWR (What to Wear?): Back End
 
-The back-end project is focused on building a Node.js/Express for the WTWR application that connects to MongoDB, defines user and clothing-item schemas with validation, implements the required CRUD and like/unlike routes, and handles errors according to the spec. I gained a deeper understanding of how to work with databases, set up security and testing, and deploy web applications on a remote machine to create a server with an API and user authorization.
+The back-end project is focused on building a Node.js/Express for the WTWR application that connects to MongoDB, defines user and clothing-item schemas with validation, implements the required CRUD and like/unlike routes, and handles errors according to the spec. I gained a deeper understanding of how to work with databases, set up security and testing,deploy web applications on a remote machine to create a server with an API and user authorization. I distinguished between authentication, authorization and identification.
 
 the project structure is set up with controllers, models, routes, utils, and configuration files, connected to the database, defined schemas with proper validation (including enums and URLs), and implemented all the required endpoints with middleware to inject a user ID.
 
@@ -13,3 +13,6 @@ the project structure is set up with controllers, models, routes, utils, and con
 - API Design
 - Custom Error Handling
 - Status Code Constants
+- middleware
+- JSON web tokens
+- methods and flags

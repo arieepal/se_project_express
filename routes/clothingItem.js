@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const auth = require("../middleware/auth");
 
 const {
   createItem,
@@ -10,18 +11,18 @@ const {
 } = require("../controllers/clothingItems");
 // crud
 
-// creat
-router.post("/", createItem);
+// create
+router.post("/", auth, createItem);
 
 // read
 router.get("/", getItems);
 
 // update
-router.put("/:itemId", updateItem);
-router.put("/:itemId/likes", likeItem);
+router.put("/:itemId", auth, updateItem);
+router.put("/:itemId/likes", auth, likeItem);
 
 // delete
-router.delete("/:itemId", deleteItem);
-router.delete("/:itemId/likes", unlikeItem);
+router.delete("/:itemId", auth, deleteItem);
+router.delete("/:itemId/likes", auth, unlikeItem);
 
 module.exports = router;
