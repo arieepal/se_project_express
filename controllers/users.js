@@ -28,6 +28,7 @@ const getUsers = (req, res) => {
 const createUser = (req, res) => {
   const { name, avatar, email, password } = req.body;
   console.log("Creating user with email:", email);
+
   bcrypt
     .hash(password, 10)
     .then((hash) => {
@@ -39,6 +40,7 @@ const createUser = (req, res) => {
       res.status(CREATED).send(userObject);
     })
     .catch((err) => {
+      console.error("Error code:", err.code);
       console.error(err);
       if (err.code === DUPLICATE_ERROR) {
         return res.status(CONFLICT).send({ message: "Email already exists" });

@@ -43,20 +43,24 @@ const getItems = (req, res) =>
       return res.status(DEFAULT_ERROR).send({ message: "Error from getItems" });
     });
 
-const updateItem = (req, res) => {
-  const { itemId } = req.params;
-  const { imageUrl } = req.body;
+// const updateItem = (req, res) => {
+//   const { itemId } = req.params;
+//   const { imageUrl } = req.body;
 
-  return ClothingItem.findByIdAndUpdate(itemId, { $set: { imageUrl } })
-    .orFail()
-    .then((item) => res.status(200).send({ data: item }))
-    .catch((e) => {
-      console.error(e);
-      return res
-        .status(DEFAULT_ERROR)
-        .send({ message: "Error from userItems" });
-    });
-};
+//   return ClothingItem.findByIdAndUpdate(
+//     itemId,
+//     { $set: { imageUrl } },
+//     { new: true, runValidators: true }
+//   )
+//     .orFail()
+//     .then((item) => res.status(200).send({ data: item }))
+//     .catch((e) => {
+//       console.error(e);
+//       return res
+//         .status(DEFAULT_ERROR)
+//         .send({ message: "Error from userItems" });
+//     });
+// };
 
 const likeItem = (req, res) => {
   const { itemId } = req.params;
