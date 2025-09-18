@@ -1,7 +1,8 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { JWT_SECRET } = require("../utils/config");
-const jwt = require("jsonwebtoken");
+
 const {
   INVALID_REQUEST,
   NOT_FOUND,
@@ -27,12 +28,11 @@ const getUsers = (req, res) => {
 
 const createUser = (req, res) => {
   const { name, avatar, email, password } = req.body;
-  console.log("Creating user with email:", email);
 
   bcrypt
     .hash(password, 10)
     .then((hash) => {
-      return User.create({ name, avatar, email, password: hash });
+      User.create({ name, avatar, email, password: hash });
     })
     .then((user) => {
       const userObject = user.toObject();
@@ -46,7 +46,7 @@ const createUser = (req, res) => {
         return res.status(CONFLICT).send({ message: "Email already exists" });
       }
       if (err.name === "ValidationError") {
-        return res.status(INVALID_REQUEST).send({ message: err.message });
+        return res.status(INVALID_REQUEST).send({ message: "Invalid data" });
       }
       return res
         .status(DEFAULT_ERROR)
@@ -64,10 +64,10 @@ const getCurrentUser = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        return res.status(NOT_FOUND).send({ message: err.message });
+        return res.status(NOT_FOUND).send({ message: "User not found" });
       }
       if (err.name === "CastError") {
-        return res.status(INVALID_REQUEST).send({ message: err.message });
+        return res.status(INVALID_REQUEST).send({ message: "Invalid request" });
       }
       return res
         .status(DEFAULT_ERROR)
@@ -90,7 +90,12 @@ const login = (req, res) => {
       res.send({ token });
     })
     .catch((err) => {
-      res.status(UNAUTHORIZED).send({ message: err.message });
+      if (err.message === "Incorrect email or password") {
+        res.status(UNAUTHORIZED).send({ message: "Unauthorized" });
+      }
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
@@ -112,10 +117,10 @@ const updateProfile = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        return res.status(NOT_FOUND).send({ message: err.message });
+        return res.status(NOT_FOUND).send({ message: "Profile not found" });
       }
       if (err.name === "ValidationError") {
-        return res.status(INVALID_REQUEST).send({ message: err.message });
+        return res.status(INVALID_REQUEST).send({ message: "Invalid request" });
       }
       return res
         .status(DEFAULT_ERROR)

@@ -10,8 +10,6 @@ const {
 } = require("../utils/errors");
 
 const createItem = (req, res) => {
-  console.log(req.user);
-  console.log(req.body);
   const { name, weather, imageUrl } = req.body;
   if (!req.user || !req.user._id) {
     console.error("req.user is undefined");
@@ -37,30 +35,11 @@ const createItem = (req, res) => {
 
 const getItems = (req, res) =>
   ClothingItem.find({})
-    .then((items) => res.status(200).send(items))
+    .then((items) => res.send(items).send(items))
     .catch((e) => {
       console.error(e);
       return res.status(DEFAULT_ERROR).send({ message: "Error from getItems" });
     });
-
-// const updateItem = (req, res) => {
-//   const { itemId } = req.params;
-//   const { imageUrl } = req.body;
-
-//   return ClothingItem.findByIdAndUpdate(
-//     itemId,
-//     { $set: { imageUrl } },
-//     { new: true, runValidators: true }
-//   )
-//     .orFail()
-//     .then((item) => res.status(200).send({ data: item }))
-//     .catch((e) => {
-//       console.error(e);
-//       return res
-//         .status(DEFAULT_ERROR)
-//         .send({ message: "Error from userItems" });
-//     });
-// };
 
 const likeItem = (req, res) => {
   const { itemId } = req.params;
@@ -113,7 +92,6 @@ const unlikeItem = (req, res) => {
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
   const userId = req.user?._id;
-  console.log(itemId);
   if (!req.user || !userId) {
     console.error("req.user is not found");
     return res.status(UNAUTHORIZED).send({ message: "unauthorized" });
@@ -129,7 +107,7 @@ const deleteItem = (req, res) => {
         return res.status(FORBIDDEN).send({ message: "Not the owner" });
       }
       return item.deleteOne().then(() => {
-        return res.status(200).send({ message: "item deleted", data: item });
+        res.status(200).send({ message: "item deleted", data: item });
       });
     })
     .catch((e) => {
@@ -143,7 +121,6 @@ const deleteItem = (req, res) => {
 module.exports = {
   createItem,
   getItems,
-  updateItem,
   deleteItem,
   unlikeItem,
   likeItem,
