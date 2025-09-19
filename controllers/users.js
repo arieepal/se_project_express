@@ -31,9 +31,7 @@ const createUser = (req, res) => {
 
   bcrypt
     .hash(password, 10)
-    .then((hash) => {
-      User.create({ name, avatar, email, password: hash });
-    })
+    .then((hash) => User.create({ name, avatar, email, password: hash }))
     .then((user) => {
       const userObject = user.toObject();
       delete userObject.password;
@@ -91,7 +89,7 @@ const login = (req, res) => {
     })
     .catch((err) => {
       if (err.message === "Incorrect email or password") {
-        res.status(UNAUTHORIZED).send({ message: "Unauthorized" });
+        return res.status(UNAUTHORIZED).send({ message: "Unauthorized" });
       }
       return res
         .status(DEFAULT_ERROR)

@@ -35,7 +35,7 @@ const createItem = (req, res) => {
 
 const getItems = (req, res) =>
   ClothingItem.find({})
-    .then((items) => res.send(items).send(items))
+    .then((items) => res.send(items))
     .catch((e) => {
       console.error(e);
       return res.status(DEFAULT_ERROR).send({ message: "Error from getItems" });
