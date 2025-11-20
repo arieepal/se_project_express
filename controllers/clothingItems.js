@@ -12,7 +12,6 @@ const {
 const createItem = (req, res) => {
   const { name, weather, imageUrl } = req.body;
   if (!req.user || !req.user._id) {
-    console.error("req.user is undefined");
     return res
       .status(UNAUTHORIZED)
       .send({ message: "Unauthorized: no user info" });
