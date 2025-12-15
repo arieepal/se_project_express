@@ -16,3 +16,15 @@ the project structure is set up with controllers, models, routes, utils, and con
 - middleware
 - JSON web tokens
 - methods and flags
+- pm2
+- registered subdomains for both back and front end
+
+# Links
+
+- **Deployed Backend API:** [WTWR backend](http://api.wtwrarieepal.heatmypool.com)
+- **Frontend Repository:** [WTWR frontend](https://github.com/arieepal/se_project_react.git)
+- **Project Pitch Video:**
+  Check out
+  [WTWR pitch video](https://www.loom.com/share/3c0554503ca44cce8d3e12d822ab1625)
+  where I describe my project
+  and some challenges I faced while building it
