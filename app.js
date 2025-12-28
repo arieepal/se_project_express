@@ -2,39 +2,40 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+const { errors } = require("celebrate");
 const mainRouter = require("./routes/index");
 
 const User = require("./models/user");
-const { errors } = require("celebrate");
+
 const errorHandler = require("./middleware/error-handler");
 const { requestLogger, errorLogger } = require("./middleware/logger");
 
 const { PORT = 3001 } = process.env;
 const app = express();
 
-//Middleware
+// Middleware
 app.use(express.json());
 app.use(cors());
 
-//Request Logger
+// Request Logger
 app.use(requestLogger);
 
-app.get("/crash-test", (req, res, next) => {
+app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("Server will crash now");
   }, 0);
 });
 
-//Routes
+// Routes
 app.use("/", mainRouter);
 
-//After Route Logger
+// After Route Logger
 app.use(errorLogger);
 
 // Celebrate error handler
 app.use(errors());
 
-//Error handler
+// Error handler
 app.use(errorHandler);
 
 mongoose
@@ -42,7 +43,7 @@ mongoose
   .then(() => User.init())
   .then(() => {
     app.listen(PORT, "0.0.0.0", () => {
-      console.log(`App running on port ${PORT}`);
+      // console.log(`App running on port ${PORT}`);
     });
   })
 
