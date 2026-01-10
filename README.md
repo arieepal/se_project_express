@@ -25,6 +25,6 @@ the project structure is set up with controllers, models, routes, utils, and con
 - **Frontend Repository:** [WTWR frontend](https://github.com/arieepal/se_project_react.git)
 - **Project Pitch Video:**
   Check out
-  [WTWR pitch video](https://www.loom.com/share/3c0554503ca44cce8d3e12d822ab1625)
+  [WTWR pitch video](https://www.loom.com/share/cd3e8a60be9b4248a52ef53a15f7bde5)
   where I describe my project
   and some challenges I faced while building it
